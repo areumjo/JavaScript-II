@@ -88,4 +88,16 @@ function removeDuplicates(array, cb) {
   // removeDuplicates removes all duplicate values from the given array.
   // Pass the duplicate free array to the callback function.
   // Do not mutate the original array.
+  const dupFree = array.filter((item, pos) => array.indexOf(item) == pos);
+  return cb(dupFree);
 }
+
+// define duplicated example 
+const duplicatedItems = ['Pencil', 'Pencil', 'Notebook', 'yo-yo', 'Gum', 'Gum', 'Book'];
+
+removeDuplicates(duplicatedItems, function(ele) {
+  console.log(ele);
+})
+
+// check if the original array is changed
+console.log(duplicatedItems);
