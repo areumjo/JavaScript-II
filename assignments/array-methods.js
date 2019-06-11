@@ -53,31 +53,90 @@ const runners = [{"id":1,"first_name":"Charmain","last_name":"Seiler","email":"c
 {"id":49,"first_name":"Bel","last_name":"Alway","email":"balway1c@ow.ly","shirt_size":"S","company_name":"Voolia","donation":107},
 {"id":50,"first_name":"Shell","last_name":"Baine","email":"sbaine1d@intel.com","shirt_size":"M","company_name":"Gabtype","donation":171}];
 
+
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs.  Combine both the first and last names into a new array called fullName. 
 let fullName = [];
-console.log(fullName);
+runners.forEach((ele) => fullName.push(ele.first_name + ' ' + ele.last_name));
+console.log(fullName.sort());
+
+
 
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runner's first names converted to uppercase because the director BECAME DRUNK WITH POWER. Convert each first name into all caps and log the result
-let allCaps = [];
-console.log(allCaps); 
+let allCaps = runners.map((ele) => ele.first_name.toUpperCase());;
+console.log(allCaps.sort()); 
+
+
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue.  Get a list of runners with large sized shirts so they can choose a different size. Return an array named largeShirts that contains information about the runners that have a shirt size of L and log the result
-let largeShirts = [];
+let largeShirts = runners.filter((ele) => ele.shirt_size === "L");
 console.log(largeShirts);
+
+
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations into a ticketPriceTotal array and log the result
 let ticketPriceTotal = [];
+ticketPriceTotal.push(runners.reduce((accu, current) => accu += current.donation, 0));
 console.log(ticketPriceTotal);
+
+
 
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
 // Problem 1
+// Divide the ruuners by the shirt size and see how many shirts with each size are needed. Check the sum is 50 as well.
+
+let xsSizeNumber = runners.filter( ele => ele.shirt_size === 'XS').length;
+let sSizeNumber = runners.filter( ele => ele.shirt_size === 'S').length;
+let mSizeNumber = runners.filter( ele => ele.shirt_size === 'M').length;
+let lSizeNumber = runners.filter( ele => ele.shirt_size === 'L').length;
+let xlSizeNumber = runners.filter( ele => ele.shirt_size === 'XL').length;
+let xxlSizeNumber = runners.filter( ele => ele.shirt_size === '2XL').length;
+let xxxlSizeNumber = runners.filter( ele => ele.shirt_size === '3XL').length;
+ 
+console.log(`X-small size: ${xsSizeNumber}`)
+console.log(`Small size: ${sSizeNumber}`)
+console.log(`Medium size: ${mSizeNumber}`)
+console.log(`Large size: ${lSizeNumber}`)
+console.log(`XL-large size: ${xlSizeNumber}`)
+console.log(`2XL-large size: ${xxlSizeNumber}`)
+console.log(`3XL-small size: ${xxlSizeNumber}`)
+console.log(`Total number: ${xsSizeNumber + sSizeNumber + mSizeNumber + lSizeNumber + xlSizeNumber + xxlSizeNumber + xxxlSizeNumber}`);
+
+
 
 // Problem 2
+// After the event director saw the result of problem 1, he/she changed mind. The director wants to see who has what size.
+// Make an object with information of shirt size (key) and first name (value)
+
+// @@(1) use function with a string (shirt_size) parameter that shows a list of runners with the shirt size
+const sizeTell = function(size){
+	let sizeTeller = [];
+	runners.filter( ele => ele.shirt_size === size).forEach((ele) => sizeTeller.push(`${ele.first_name} ${ele.last_name} is ${size} size`)); 
+	return console.log(sizeTeller);
+}
+// @@(2) call the function with the size you want to know
+sizeTell('XS');
+sizeTell('XL');
+// @@(3) now the director is happy! just type sizeTell('size') then it shows the runners with first name and last name
+
+
 
 // Problem 3
+// The event director wants to make a platinum and gold badge for the runners who donates more than 200 and 100 respectively. 
+// Return the two objects named 'goldMember' and 'platinumMember' having the badge level (key) and the member's full name (value)
+
+const gold = runners.filter( money => money.donation >= 100 && money.donation < 200).map(ele => `${ele.first_name} ${ele.last_name}`);
+const goldMember = {};
+goldMember["Gold-badge"] = gold;
+
+const platinum = runners.filter( money => money.donation > 200).map(ele => `${ele.first_name} ${ele.last_name}`);
+const platinumMember = {};
+platinumMember["Platinum-badge"] = platinum;
+
+console.log(goldMember);
+console.log(platinumMember);
